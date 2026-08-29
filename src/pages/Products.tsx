@@ -161,6 +161,18 @@ export default function Products() {
               </button>
             </div>
             <form onSubmit={handleSubmit} className="p-6 space-y-4">
+              {mutation.isError && (
+                <div className="bg-red-500/10 text-red-500 p-3 rounded-lg text-sm border border-red-500/20 mb-4">
+                  <p className="font-semibold">{((mutation.error as any)?.response?.data?.message) || "An error occurred"}</p>
+                  {((mutation.error as any)?.response?.data?.errors) && (
+                    <ul className="list-disc list-inside mt-1">
+                      {Object.values(((mutation.error as any).response.data.errors)).map((errs: any, i) => (
+                        <li key={i}>{errs[0]}</li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+              )}
               <div className="grid grid-cols-2 gap-4">
                 <div className="col-span-2">
                   <label className="block text-sm font-medium text-foreground mb-1">SKU</label>
